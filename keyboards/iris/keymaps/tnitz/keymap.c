@@ -7,6 +7,7 @@ extern keymap_config_t keymap_config;
 #define _QWERTY 0
 #define _LOWER 1
 #define _RAISE 2
+#define _NAV 3
 #define _ADJUST 16
 
 enum custom_keycodes {
@@ -14,6 +15,7 @@ enum custom_keycodes {
   LOWER,
   RAISE,
   ADJUST,
+  NAV,
 };
 
 #define KC_ KC_TRNS
@@ -21,7 +23,9 @@ enum custom_keycodes {
 
 #define KC_LOWR LOWER
 #define KC_RASE RAISE
+#define KC_NAV NAV
 #define KC_RST RESET
+#define KC_NSPC LT(_NAV, KC_SPC)
 #define KC_BL_S BL_STEP
 #define KC_DBUG DEBUG
 #define KC_RTOG RGB_TOG
@@ -39,19 +43,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,----+----+----+----+----+----.              ,----+----+----+----+----+----.
      ESC , 1  , 2  , 3  , 4  , 5  ,                6  , 7  , 8  , 9  , 0  ,BSPC,
   //|----+----+----+----+----+----|              |----+----+----+----+----+----|
-     TAB , Q  , W  , E  , R  , T  ,                Y  , U  , I  , O  , P  ,BSLS ,
+     TAB , Q  , W  , E  , R  , T  ,                Y  , U  , I  , O  , P  ,BSLS,
   //|----+----+----+----+----+----|              |----+----+----+----+----+----|
      LCTL, A  , S  , D  , F  , G  ,                H  , J  , K  , L  ,SCLN,QUOT,
   //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+----|
      LSFT, Z  , X  , C  , V  , B  ,LBRC,     RBRC, N  , M  ,COMM,DOT ,SLSH,RSFT,
   //`----+----+----+--+-+----+----+----/    \----+----+----+----+----+----+----'
-                       LGUI,LALT,ENT ,         SPC ,LOWR,RASE
+                       LGUI,LALT,ENT ,        NSPC ,RASE,LOWR
   //                  `----+----+----'        `----+----+----'
   ),
 
   [_LOWER] = KC_KEYMAP(
   //,----+----+----+----+----+----.              ,----+----+----+----+----+----.
-     TILD,EXLM, AT ,HASH,DLR ,PERC,               CIRC,AMPR,ASTR,LPRN,RPRN,BSPC,
+     GRV ,EXLM, AT ,HASH,DLR ,PERC,               CIRC,AMPR,ASTR,LPRN,RPRN,BSPC,
   //|----+----+----+----+----+----|              |----+----+----+----+----+----|
      RST , 1  , 2  , 3  , 4  , 5  ,                6  , 7  , 8  , 9  , 0  ,    ,
   //|----+----+----+----+----+----|              |----+----+----+----+----+----|
@@ -59,7 +63,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+----|
      BL_S,    ,    ,    ,DOWN,LCBR,LPRN,     RPRN,RCBR, P1 , P2 , P3 ,MINS,    ,
   //`----+----+----+--+-+----+----+----/    \----+----+----+----+----+----+----'
-                           ,    ,DEL ,         DEL ,    , P0
+                           ,    ,DEL ,         DEL ,    ,
   //                  `----+----+----'        `----+----+----'
   ),
 
@@ -72,6 +76,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
          ,MPRV,MNXT,VOLU,PGUP,UNDS,               EQL ,HOME,    ,    ,    ,BSLS,
   //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+----|
      MUTE,MSTP,MPLY,VOLD,PGDN,MINS,    ,         ,PLUS,END ,    ,    ,    ,    ,
+  //`----+----+----+--+-+----+----+----/    \----+----+----+----+----+----+----'
+                           ,    ,    ,             ,    ,
+  //                  `----+----+----'        `----+----+----'
+  ),
+
+  [_NAV] = KC_KEYMAP(
+  //,----+----+----+----+----+----.              ,----+----+----+----+----+----.
+     F12 , F1 , F2 , F3 , F4 , F5 ,                F6 , F7 , F8 , F9 ,F10 ,F11 ,
+  //|----+----+----+----+----+----|              |----+----+----+----+----+----|
+         ,    ,    ,PGUP,    ,    ,                   ,    ,UP  ,    ,    ,    ,
+  //|----+----+----+----+----+----|              |----+----+----+----+----+----|
+         ,    ,HOME,PGDN,END ,    ,                   ,LEFT,DOWN,RGHT,    ,    ,
+  //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+----|
+         ,MSTP,MPLY,VOLD,VOLU,MUTE,    ,         ,    ,MPRV,MNXT,    ,    ,    ,
   //`----+----+----+--+-+----+----+----/    \----+----+----+----+----+----+----'
                            ,    ,    ,             ,    ,
   //                  `----+----+----'        `----+----+----'
@@ -138,6 +156,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         layer_on(_ADJUST);
       } else {
         layer_off(_ADJUST);
+      }
+      return false;
+      break;
+    case NAV:
+      if (record->event.pressed) {
+        layer_on(_NAV);
+      } else {
+        layer_off(_NAV);
       }
       return false;
       break;
