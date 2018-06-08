@@ -50,7 +50,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+----|
      LSFT, Z  , X  , C  , V  , B  ,LBRC,     RBRC, N  , M  ,COMM,DOT ,SLSH,RSFT,
   //`----+----+----+--+-+----+----+----/    \----+----+----+----+----+----+----'
-                       LGUI,LALT,NENT,        NSPC ,RASE,LOWR
+                       LGUI,LALT,NENT,        NSPC ,RASE,NAV
   //                  `----+----+----'        `----+----+----'
   ),
 
@@ -76,9 +76,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|----+----+----+----+----+----|              |----+----+----+----+----+----|
          ,MPRV,MNXT,VOLU,PGUP,UNDS,               EQL ,HOME,    ,    ,    ,BSLS,
   //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+----|
-     MUTE,MSTP,MPLY,VOLD,PGDN,MINS,    ,         ,PLUS,END ,    ,    ,    ,    ,
+         ,MSTP,MPLY,VOLD,PGDN,MINS,    ,         ,PLUS,END ,    ,    ,    ,    ,
   //`----+----+----+--+-+----+----+----/    \----+----+----+----+----+----+----'
-                           ,    ,    ,             ,    ,
+                           ,    ,DEL ,         DEL ,    ,
   //                  `----+----+----'        `----+----+----'
   ),
 
