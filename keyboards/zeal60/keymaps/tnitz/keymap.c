@@ -1,10 +1,10 @@
 // Default layout for Zeal60
-
+// clang-format off
 #include "zeal60.h"
 
 #define _______ KC_TRNS
 #define XXXXX KC_NO
-#define SPC_NAV LT(_NAV, KC_SPC)
+#define SPC_NAV LT(_VIMNAV, KC_SPC)
 #define MODIFY TO(_ADJUST)
 
 // [0,13] is either left key of split backspace (e.g. HHKB \| key) or 2U backspace
@@ -18,6 +18,7 @@ enum layers {
   _BASE,
   _FN,
   _NAV,
+  _VIMNAV,
   _ADJUST
 };
 
@@ -50,6 +51,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, MODIFY,  _______}
 },
 
+// Fn2 Layer
+[_VIMNAV] = {
+        {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______},
+        {_______, _______, _______, KC_PGUP, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______},
+        {_______, _______, KC_HOME, KC_PGDN, KC_END,  _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______, _______, _______},
+        {_______, _______, KC_MSTP, KC_MPLY, KC_VOLD, KC_VOLU, KC_MUTE, _______, _______, _______, _______, _______, _______, _______},
+        {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, MODIFY,  _______}},
+
 // Fn3 Layer (zeal60 Configuration)
 [_ADJUST] = {
         {TO(_BASE),EF_DEC,  EF_INC, H1_DEC,  H1_INC,  H2_DEC,  H2_INC,  _______, _______, _______, _______, BR_DEC,  BR_INC,  RESET},
@@ -60,3 +69,4 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 }
 
 };
+// clang-format on
