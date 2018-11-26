@@ -1,6 +1,6 @@
-#include "iris.h"
 #include "action_layer.h"
 #include "eeconfig.h"
+#include "iris.h"
 
 extern keymap_config_t keymap_config;
 
@@ -38,6 +38,7 @@ enum custom_keycodes {
 #define KC_RVAI RGB_VAI
 #define KC_RVAD RGB_VAD
 
+// clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_QWERTY] = KC_KEYMAP(
@@ -50,7 +51,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+----|
      LSFT, Z  , X  , C  , V  , B  ,LBRC,     RBRC, N  , M  ,COMM,DOT ,SLSH,RSFT,
   //`----+----+----+--+-+----+----+----/    \----+----+----+----+----+----+----'
-                       LGUI,LALT,NENT,        NSPC ,RASE,NAV
+                       LGUI,LALT,NENT,        NSPC ,RASE,RGUI
   //                  `----+----+----'        `----+----+----'
   ),
 
@@ -74,7 +75,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|----+----+----+----+----+----|              |----+----+----+----+----+----|
      GRV ,EXLM, AT ,HASH,DLR ,PERC,               CIRC,AMPR,ASTR,LPRN,RPRN,    ,
   //|----+----+----+----+----+----|              |----+----+----+----+----+----|
-         ,MPRV,MNXT,VOLU,PGUP,UNDS,               EQL ,HOME,    ,    ,    ,BSLS,
+         ,MPRV,MNXT,VOLU,PGUP,UNDS,               EQL ,MINS,EQL ,LBRC,RBRC,BSLS,
   //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+----|
          ,MSTP,MPLY,VOLD,PGDN,MINS,    ,         ,PLUS,END ,    ,    ,    ,    ,
   //`----+----+----+--+-+----+----+----/    \----+----+----+----+----+----+----'
@@ -171,3 +172,4 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
   return true;
 }
+// clang-format on

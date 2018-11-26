@@ -1,13 +1,13 @@
-#include "lets_split.h"
 #include "action_layer.h"
 #include "eeconfig.h"
+#include "lets_split.h"
 
 extern keymap_config_t keymap_config;
 
-// Each layer gets a name for readability, which is then used in the keymap matrix below.
-// The underscores don't mean anything - you can have a layer called STUFF or any other name.
-// Layer names don't all need to be of the same length, obviously, and you can also skip them
-// entirely and just use numbers.
+// Each layer gets a name for readability, which is then used in the keymap
+// matrix below. The underscores don't mean anything - you can have a layer
+// called STUFF or any other name. Layer names don't all need to be of the same
+// length, obviously, and you can also skip them entirely and just use numbers.
 enum layers {
   _QWERTY,
   _COLEMAK,
@@ -19,8 +19,9 @@ enum layers {
   _ADJUST
 };
 
-#define CTRL_ESC CTL_T(KC_ESC)
-#define SPC_NAV LT(_NAV, KC_SPC)
+#define KC_CESC CTL_T(KC_ESC)
+#define KC_NSPC LT(_NAV, KC_SPC)
+#define KC_NENT LT(_NAV, KC_ENT)
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
@@ -31,6 +32,7 @@ enum custom_keycodes {
   ADJUST,
 };
 
+// clang-format off
 // Fillers to make layering more clear
 #define _______ KC_TRNS
 #define XXXXXXX KC_NO
@@ -50,9 +52,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_QWERTY] = KEYMAP( \
   KC_TAB,   KC_Q,     KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC, \
-  CTRL_ESC, KC_A,     KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, \
+  KC_CESC,  KC_A,     KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, \
   KC_LSFT,  KC_Z,     KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT , \
-  KC_ESC,   KC_LCTRL, KC_LGUI, KC_LALT, LOWER,   SPC_NAV, SPC_NAV, RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT \
+  KC_ESC,   KC_LCTRL, KC_LGUI, KC_LALT, LOWER,   KC_NENT, KC_NSPC, RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT \
 ),
 
 /* Colemak
@@ -155,11 +157,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
 };
+// clang-format on
 
 #ifdef AUDIO_ENABLE
-float tone_qwerty[][2]     = SONG(QWERTY_SOUND);
-float tone_dvorak[][2]     = SONG(DVORAK_SOUND);
-float tone_colemak[][2]    = SONG(COLEMAK_SOUND);
+float tone_qwerty[][2] = SONG(QWERTY_SOUND);
+float tone_dvorak[][2] = SONG(DVORAK_SOUND);
+float tone_colemak[][2] = SONG(COLEMAK_SOUND);
 #endif
 
 void persistent_default_layer_set(uint16_t default_layer) {
@@ -169,61 +172,61 @@ void persistent_default_layer_set(uint16_t default_layer) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-    case QWERTY:
-      if (record->event.pressed) {
-        #ifdef AUDIO_ENABLE
-          PLAY_SONG(tone_qwerty);
-        #endif
-        persistent_default_layer_set(1UL<<_QWERTY);
-      }
-      return false;
-      break;
-    case COLEMAK:
-      if (record->event.pressed) {
-        #ifdef AUDIO_ENABLE
-          PLAY_SONG(tone_colemak);
-        #endif
-        persistent_default_layer_set(1UL<<_COLEMAK);
-      }
-      return false;
-      break;
-    case DVORAK:
-      if (record->event.pressed) {
-        #ifdef AUDIO_ENABLE
-          PLAY_SONG(tone_dvorak);
-        #endif
-        persistent_default_layer_set(1UL<<_DVORAK);
-      }
-      return false;
-      break;
-    case LOWER:
-      if (record->event.pressed) {
-        layer_on(_LOWER);
-        update_tri_layer(_LOWER, _RAISE, _ADJUST);
-      } else {
-        layer_off(_LOWER);
-        update_tri_layer(_LOWER, _RAISE, _ADJUST);
-      }
-      return false;
-      break;
-    case RAISE:
-      if (record->event.pressed) {
-        layer_on(_RAISE);
-        update_tri_layer(_LOWER, _RAISE, _ADJUST);
-      } else {
-        layer_off(_RAISE);
-        update_tri_layer(_LOWER, _RAISE, _ADJUST);
-      }
-      return false;
-      break;
-    case ADJUST:
-      if (record->event.pressed) {
-        layer_on(_ADJUST);
-      } else {
-        layer_off(_ADJUST);
-      }
-      return false;
-      break;
+  case QWERTY:
+    if (record->event.pressed) {
+#ifdef AUDIO_ENABLE
+      PLAY_SONG(tone_qwerty);
+#endif
+      persistent_default_layer_set(1UL << _QWERTY);
+    }
+    return false;
+    break;
+  case COLEMAK:
+    if (record->event.pressed) {
+#ifdef AUDIO_ENABLE
+      PLAY_SONG(tone_colemak);
+#endif
+      persistent_default_layer_set(1UL << _COLEMAK);
+    }
+    return false;
+    break;
+  case DVORAK:
+    if (record->event.pressed) {
+#ifdef AUDIO_ENABLE
+      PLAY_SONG(tone_dvorak);
+#endif
+      persistent_default_layer_set(1UL << _DVORAK);
+    }
+    return false;
+    break;
+  case LOWER:
+    if (record->event.pressed) {
+      layer_on(_LOWER);
+      update_tri_layer(_LOWER, _RAISE, _ADJUST);
+    } else {
+      layer_off(_LOWER);
+      update_tri_layer(_LOWER, _RAISE, _ADJUST);
+    }
+    return false;
+    break;
+  case RAISE:
+    if (record->event.pressed) {
+      layer_on(_RAISE);
+      update_tri_layer(_LOWER, _RAISE, _ADJUST);
+    } else {
+      layer_off(_RAISE);
+      update_tri_layer(_LOWER, _RAISE, _ADJUST);
+    }
+    return false;
+    break;
+  case ADJUST:
+    if (record->event.pressed) {
+      layer_on(_ADJUST);
+    } else {
+      layer_off(_ADJUST);
+    }
+    return false;
+    break;
   }
   return true;
 }
